@@ -1,5 +1,4 @@
 # raml-service
-===========
 
 Node module to create raml API service based on RAML 1.0 definition.
 Forked from https://github.com/farolfo/raml-server.git and farolfo.
