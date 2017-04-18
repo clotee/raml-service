@@ -1,0 +1,35 @@
+{
+  "name": "raml-service",
+  "version": "1.0.2",
+  "description": "a api service for raml. nodejs.",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin":{
+    "raml-service":"index.js"
+  },
+  "dependencies": {
+    "json-server": "^0.7.11",
+    "raml-1-mocker": "^0.1.2",
+    "underscore": "^1.8.3",
+    "yargs": "^4.7.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clotee/raml-service.git"
+  },
+  "keywords": [
+    "raml",
+    "raml-service"
+  ],
+  "author": "clotee (大冰)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/clotee/raml-service/issues"
+  },
+  "homepage": "https://github.com/clotee/raml-service#readme"
+}

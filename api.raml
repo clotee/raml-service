@@ -1,0 +1,234 @@
+#%RAML 1.0
+title: OFC API
+uses:
+  Common: schemas/Common.raml
+  Service: schemas/Service.raml
+
+version: v1
+baseUri: http://localhost/ofc/api/{version}/
+mediaType: application/json
+protocols: [HTTP,HTTPS]
+/service:
+  post:
+    description: 服务列表
+    body:
+      application/json:
+        type: Common.Request
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include ./examples/Service/ServiceResponse.json
+  /{service_id}:
+    post:
+      description: |
+        服务详情
+      body:
+        application/json:
+          type: Common.Request
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include ./examples/Service/ServiceDetailResponse.json
+    /dashboard:
+      description: 服务看板相关接口
+      /progress:
+        post:
+          description: 服务进程信息,包括订单数、各工作节点统计数据
+    /analysis:
+        description: 统计分析相关接口
+        /order_create:
+          post:
+            description: 统计特定时间段内的新增订单数, 以小时为单位
+    /work_node:
+      post:
+        description: 服务对应工作节点列表
+        body:
+          application/json:
+            type: Common.Request
+        responses:
+          200:
+            body:
+              application/json:
+                example: !include ./examples/Service/ServiceWorkNodeResponse.json
+  /stats:
+    post:
+      description: |
+        [第二迭代]服务列表统计信息,优先显示产品列表，统计信息通过接口异步获取 - TODO
+        对应应收应付
+  /create:
+    post:
+      description: 新增服务
+      body:
+        application/json:
+          example: !include ./examples/Service/ServiceCreateRequest.json
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include ./examples/Service/ServiceCreateResponse.json
+/work_node:
+  description: 工作节点相关接口
+  /create:
+    post:
+      description: 新增工作节点
+      body:
+        application/json:
+          example: !include ./examples/WorkNode/WorkNodeCreateRequest.json
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include ./examples/WorkNode/WorkNodeCreateReponse.json
+  /{id}:
+    post:
+      description: 工作节点详情
+      body:
+        application/json:
+          type: Common.Request
+      responses:
+        200:
+          body:
+            application/json:
+              type: Common.Response
+              example: !include ./examples/WorkNode/WorkNodeDetailResponse.json
+    /delete:
+      post:
+        description: 删除特定工作节点
+        body:
+          application/json:
+            type: Common.Request
+        responses:
+          200:
+            body:
+              application/json:
+                type: Common.Response
+    /edit:
+      post:
+        description: 编辑工作节点信息
+        body:
+          application/json:
+            type: Common.Request
+            example: !include ./examples/WorkNode/WorkNodeEditRequest.json
+        responses:
+          200:
+            body:
+              application/json:
+                type: Common.Response
+    /distribute:
+      post:
+        description: |
+          (取消, ServiceWorkNode接口已满足需求)显示特定工作节点已绑定的分拨组件详情, 返回接口包含预设及自定义分拨组件信息
+        body:
+          application/json:
+            type: Common.Request
+        responses:
+          200:
+            body:
+              application/json:
+
+      /update:
+        post:
+          description: 从分拨组件列表中添加或删除组件到特定工作节点
+          body:
+            application/json:
+              type: Common.Request
+              example: !include ./examples/WorkNode/WorkNodeDistributeAddRequest.json
+          responses:
+            200:
+              body:
+                application/json:
+                  type: Common.Response
+/distribute:
+  post:
+    description: 显示分拨组件列表, 包括预设和自定义
+    body:
+      application/json:
+        type: Common.Request
+        example: !include ./examples/Distribute/DistributeRequest.json
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include ./examples/Distribute/DistributeResponse.json
+  /add:
+    post:
+      description: 新增分拨组件,目前只支持新增自定义分拨组件
+      body:
+        application/json:
+          type: Common.Request
+          example: !include ./examples/Distribute/DistributeAddRequest.json
+      responses:
+        200:
+          body:
+            application/json:
+              type: Common.Response
+  /{id}:
+    post:
+      description: 组件详情
+      body:
+        application/json:
+          type: Common.Request
+      responses:
+        200:
+          body:
+            application/json:
+              type: Common.Response
+              example: !include ./examples/Distribute/DistributeDetailResponse.json
+    /edit:
+      post:
+        description: 编辑组件信息
+        body:
+          application/json:
+            type: Common.Request
+            example: !include ./examples/Distribute/DistributeDetailRequest.json
+        responses:
+          200:
+            body:
+              application/json:
+                type: Common.Response
+    /delete:
+      post:
+        description: 删除组件
+        body:
+          application/json:
+            type: Common.Request
+        responses:
+          200:
+            body:
+              application/json:
+                type: Common.Response
+/order:
+  post:
+    description: 订单列表
+    body:
+      application/json:
+        example: !include ./examples/Order/OrderRequest.json
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include ./examples/Order/OrderResponse.json
+  /{id}:
+    post:
+      description: 订单详情
+      body:
+        application/json:
+          type: Common.Request
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include ./examples/Order/OrderDetailResponse.json
+    /progress:
+      post:
+        description: 订单进程
+        body:
+          application/json:
+            type: Common.Request
+        responses:
+          200:
+            body:
+              application/json:
+                example: !include ./examples/Order/OrderProgressResponse.json
